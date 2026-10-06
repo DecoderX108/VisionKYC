@@ -1,0 +1,29 @@
+# ---- Web UI ----
+streamlit==1.32.2
+
+# ---- Core / image processing ----
+numpy==1.24.4
+pandas==2.0.3
+Pillow==10.2.0
+PyYAML==6.0.1
+scipy==1.10.1
+scikit-image==0.21.0
+# deepface requires opencv-python, easyocr requires opencv-python-headless;
+# pin both to the same version so they never fight over the `cv2` package.
+opencv-python==4.9.0.80
+opencv-python-headless==4.9.0.80
+
+# ---- OCR (EasyOCR + PyTorch) ----
+torch==2.2.1
+torchvision==0.17.1
+easyocr==1.7.1
+
+# ---- Face verification (DeepFace + TensorFlow) ----
+tensorflow==2.15.0
+keras==2.15.0
+deepface==0.0.93
+
+# ---- Database ----
+# 9.x does not force a protobuf version (8.x pins protobuf 4.21.x, which
+# conflicts with TensorFlow 2.15).
+mysql-connector-python==9.0.0

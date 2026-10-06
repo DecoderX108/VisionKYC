@@ -1,0 +1,53 @@
+# Run everything with:   docker compose up --build
+# App:  http://localhost:8501
+services:
+  db:
+    image: mysql:8.0
+    container_name: visionkyc-db
+    restart: unless-stopped
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-ekyc}
+      MYSQL_USER: ${MYSQL_USER:-ekyc_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ekyc_password}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      # Use TCP (127.0.0.1) so it only turns healthy once the *real* server is up,
+      # not the temporary init-time server.
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    # Uncomment to inspect the DB from your host (e.g. MySQL Workbench / DBeaver):
+    # ports:
+    #   - "3307:3306"
+
+  app:
+    build: .
+    image: visionkyc:latest
+    container_name: visionkyc-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: "3306"
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-ekyc}
+      MYSQL_USER: ${MYSQL_USER:-ekyc_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ekyc_password}
+    ports:
+      - "8501:8501"
+    volumes:
+      - app_logs:/app/logs
+      - deepface_cache:/home/app/.deepface
+      - easyocr_cache:/home/app/.EasyOCR
+
+volumes:
+  mysql_data:
+  app_logs:
+  deepface_cache:
+  easyocr_cache:

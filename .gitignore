@@ -1,0 +1,52 @@
+# ── Environments ──────────────────────────────────
+venv/
+*env*
+!.env.example
+.env
+
+# ── Python & Build ────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# ── Data (keep repo small) ─────────────────────────
+data/01_raw_data/*
+!data/01_raw_data/.gitkeep
+data/02_intermediate_data/*
+!data/02_intermediate_data/.gitkeep
+data/03_processed_data/*
+!data/03_processed_data/.gitkeep
+
+# ── Model cache (huge — don't upload to GitHub) ───
+.deepface/
+.easyocr/
+models_cache/
+*.pth
+*.pt
+*.h5
+*.pb
+
+# ── Docker ─────────────────────────────────────────
+docker-compose.override.yml
+
+# ── Logs & temp ────────────────────────────────────
+logs/*.log
+*.log
+tmp/
+temp/
+
+# ── IDE & System ───────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── Streamlit ───────────────────────────────────────
+.streamlit/secrets.toml

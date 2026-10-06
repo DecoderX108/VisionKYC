@@ -1,0 +1,23 @@
+.git
+.gitignore
+.vscode/
+**/__pycache__/
+*.pyc
+venv/
+env/
+.venv/
+.env
+
+# Not needed at runtime (and large)
+notebooks/
+*.ipynb
+*.drawio
+data/01_raw_data/
+data/faces/
+data/02_intermediate_data/*
+logs/
+
+Dockerfile
+docker-compose.yml
+.dockerignore
+README.md
